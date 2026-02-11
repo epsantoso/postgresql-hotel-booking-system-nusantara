@@ -58,23 +58,236 @@ chmod +x install.sh
 ## 📁 Project Structure
 ```
 PostgreSQL-Hotel-Booking-System-Nusantara/
-├── 00_database_setup.sql      # Database & extensions setup
-├── 01_types.sql              # Custom ENUM types
-├── 02_tables.sql             # Core tables (12 tables)
-├── 03_constraints.sql        # Business rules enforcement
-├── 04_indexes.sql            # Performance optimization (40+ indexes)
-├── 05_functions.sql          # Business logic functions
-├── 06_triggers.sql           # Automation triggers
-├── 07_views.sql              # Reporting views (12 views)
-├── 08_seed_data.sql          # Sample data for testing
-├── 09_stored_procedures.sql  # Complex operations
-├── 10_showcase_queries.sql   # Example analytics queries
 ├── install.sh                # Installation script
 ├── README.md                 # File readme
 ├── LICENSE                   # File license
 ├──.gitignore                 # File gitignore
 ├── technical_detail.md       # This file
+├── sql
+        ├── 00_database_setup.sql      # Database & extensions setup
+        ├── 01_types.sql              # Custom ENUM types
+        ├── 02_tables.sql             # Core tables (12 tables)
+        ├── 03_constraints.sql        # Business rules enforcement
+        ├── 04_indexes.sql            # Performance optimization (40+ indexes)
+        ├── 05_functions.sql          # Business logic functions
+        ├── 06_triggers.sql           # Automation triggers
+        ├── 07_views.sql              # Reporting views (12 views)
+        ├── 08_seed_data.sql          # Sample data for testing
+        ├── 09_stored_procedures.sql  # Complex operations
+        ├── 10_showcase_queries.sql   # Example analytics queries
 
+
+       ### 00_database_setup.sql
+
+            Tujuan: Inisialisasi environment database.
+
+            Isi utama:
+
+            Pembuatan database & schema
+
+            Aktivasi ekstensi PostgreSQL:
+
+            btree_gist → support constraint untuk range & exclusion
+
+            uuid-ossp → UUID generator
+
+            pg_stat_statements → monitoring query
+
+            tablefunc → pivot / reporting
+
+            Skill yang ditunjukkan:
+
+            Environment preparation
+
+            Awareness terhadap extensibility PostgreSQL
+
+        ### 01_types.sql
+
+            Tujuan: Mendefinisikan custom data types untuk konsistensi data.
+
+            Contoh:
+
+            ENUM status pemesanan (booked, checked_in, cancelled)
+
+            ENUM metode pembayaran
+
+            ENUM tipe kamar
+
+            Kenapa penting:
+
+            Mencegah invalid value
+
+            Lebih kuat dari VARCHAR
+
+            Mudah dipakai ulang
+
+            Skill: Domain modeling & data consistency
+
+        ### 02_tables.sql
+
+            Tujuan: Membuat seluruh tabel inti sistem.
+
+            Isi:
+
+            Tabel master (tamu, kamar, staff)
+
+            Tabel transaksi (pemesanan, pembayaran)
+
+            Tabel pendukung (housekeeping, fasilitas)
+
+            Teknik yang dipakai:
+
+            Primary key (UUID / serial)
+
+            Foreign key relationships
+
+            JSONB untuk atribut fleksibel
+
+            Audit columns (created_at, updated_at)
+
+            Skill: Relational modeling & normalization
+
+        ### 03_constraints.sql
+
+            Tujuan: Menegakkan aturan bisnis di level database.
+
+            Isi:
+
+            CHECK constraint (tanggal check-out > check-in)
+
+            UNIQUE constraint (nomor kamar, kode booking)
+
+            FOREIGN KEY constraint
+
+            Highlight penting:
+
+            Pencegahan data invalid tanpa bergantung aplikasi
+
+            Skill: Business rule enforcement
+
+        ### 04_indexes.sql
+
+            Tujuan: Optimasi performa query.
+
+            Jenis index:
+
+            B-Tree → query umum & FK
+
+            GIN → JSONB & full-text search
+
+            BRIN → data berbasis waktu (reservasi)
+
+            Partial index → query status tertentu
+
+            Skill: Performance tuning & query planning
+
+        ### 05_functions.sql
+
+            Tujuan: Menyimpan business logic reusable.
+
+            Contoh function:
+
+            Cek ketersediaan kamar
+
+            Hitung total biaya
+
+            Validasi tanggal booking
+
+            Generate kode booking
+
+            Bahasa: PL/pgSQL
+
+            Skill: Procedural logic di PostgreSQL
+
+        ### 06_triggers.sql
+
+            Tujuan: Otomatisasi & proteksi data.
+
+            Trigger yang umum:
+
+            Auto update updated_at
+
+            Validasi double booking
+
+            Update status kamar saat check-in/out
+
+            Kenapa penting:
+
+            Data tetap aman walau bypass aplikasi
+
+            Skill: Event-driven database logic
+
+        ### 07_views.sql
+
+            Tujuan: Abstraction layer & reporting.
+
+            Isi:
+
+            View dashboard harian
+
+            View check-in/check-out hari ini
+
+            View laporan pendapatan
+
+            View performa kamar
+
+            Manfaat:
+
+            Query lebih sederhana
+
+            Aman untuk reporting user
+
+            Skill: Data abstraction & reporting design
+
+        ### 08_seed_data.sql
+
+            Tujuan: Menyediakan data contoh realistis.
+
+            Isi:
+
+            Data kamar
+
+            Data tamu
+
+            Data staff
+
+            Contoh pemesanan & pembayaran
+
+            Skill: Data simulation & testing readiness
+
+        ### 09_stored_procedures.sql
+
+            Tujuan: Operasi kompleks & transactional.
+
+            Contoh prosedur:
+
+            Proses booking lengkap (insert multi tabel)
+
+            Update harga massal
+
+            Generate laporan periodik
+
+            Teknik:
+
+            Transaction control
+
+            Error handling
+
+            Skill: Advanced database operations
+
+        ### 10_showcase_queries.sql
+
+            Tujuan: Demonstrasi kemampuan SQL.
+
+            Isi:
+
+            Query analisis revenue
+
+            Occupancy rate
+
+            Top guest
+
+            Performa kamar
 ```
 
 ## 🎨 Database Schema
@@ -378,4 +591,5 @@ Distributed under the MIT License. See `LICENSE` for more information.
 **Version:** 1.0.0  
 **Last Updated:** November 2025  
 **Compatibility:** PostgreSQL 13+  
+
 **Status:** ✅ Production Ready
