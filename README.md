@@ -41,6 +41,7 @@ postgreSQL-hotel-booking-system-nusantara/
 ├── setup.sh
 ├── .gitignore
 ├── LICENSE
+├── technical_detail.md
 └── sql/
     ├── 00_database_setup.sql
     ├── 01_types.sql
